@@ -45,8 +45,34 @@ class TemplateController extends Controller
             'footer'=>$request->input('footer')
         ]);
 
+        $body_data[]=["type"=> "BODY",
+            "text"=> $request->input('body')];
+        if($request->input('footer')!='')
+        {
+        $body_data[]=["type"=> "FOOTER",
+            "text"=> $request->input('footer')];
+        }
 
+        $body_data[]=[
+             "type"=>"BUTTONS",
+             "buttons"=> [[ 
+                    "type"=> "URL",
+                    "text"=> "Shop Now",
+                    "url"=> "https://kirtilals.com",
+            ]],
+        
+        ];
 
+$data=[
+    "name"=>$request->input('template_name').'5',
+    "category"=>$request->input('category'),
+    "language"=> "en_US",
+    "components"=>$body_data,
+];
+// dd($data['components']['2']['buttons']['0']);
+$post_data = http_build_query($data);
+
+// dd($data);
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
@@ -60,39 +86,18 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => 'POST',
     CURLOPT_HTTPHEADER => array(
     'Content-Type: application/json',
-    'Authorization: Bearer EAARUezjzsD0BP5T8bmNuCduN6lsyrfffpInZCS06AkSI09Mgh1B4ENu1ue7plBMwGf30uZBpvnzZAYMFkFiVZBUMYtkhZA4Erb2C0p6ZAZAhMAhhrQdj2gegdkJhx7HxIWvWpLPPzTi9mW6NnNoJ8HtlYIwZAqHUc2RVrKDPo6reduZC7XI5ecw7nUmKDb3PYPsyKb0XNPMg6ZBaaQYPJ28LIE5FYkbst09Kxz0qo11VIINyCs1gZDZD'
+    'Authorization: Bearer EAARUezjzsD0BP4CZCub28RkU19OhFGTrOPpPnCVUhdiKGYSZCQOrpeJ74oIuTNSk1WXSRVXBVy87FsZCr00nps7lsQCVpr0m9VnzZC7AZAtaevQCd938GGhf7zE7v6GKz2D7hCNGZAywb4iR6OFQRyGLBb60vuiFrSrGZBYMWJTxAlTRz1WaFuBTHUPC8jW7q64fstlDS5JZARjq1zZBzMFoWY4DiBj9I9mb7G1pReRZBl141rOgZDZD'
   ),
-  CURLOPT_POSTFIELDS =>'{
-    "name": "test_template_from_api",
-    "category": "MARKETING",
-    "language": "en_US",
-    "components": [
-        {
-            "type": "BODY",
-            "text": "Welcome to Kirtilals"
-        },
-        {
-            "type": "FOOTER",
-            "text": "Reply STOP to unsubscribe"
-        },
-        {
-            "type": "BUTTONS",
-            "buttons": [
-                {
-                    "type": "URL",
-                    "text": "Shop Now",
-                    "url": "https://kirtilals.com"
-                }
-            ]
-        }
-    ]
-}'
+  CURLOPT_POSTFIELDS => $post_data,
 ));
 
 $response = curl_exec($curl);
-
+$response_data = json_decode($response, true);  
 curl_close($curl);
-echo $response;
+    if($response_data['status'] !='PENDING')
+    {
+        ECHO '1';
+    }
 
         
     }
