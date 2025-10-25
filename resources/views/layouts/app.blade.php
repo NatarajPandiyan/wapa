@@ -163,14 +163,19 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
+                  <a href="/customers" class="menu-link">
                     <div data-i18n="Without navbar">Bulk Import</div>
                   </a>
                 </li>
               
               </ul>
             </li>
-
+            <li class="menu-item">
+              <a href="/templates" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Template</div>
+              </a>
+            </li>
             
         </aside>
         <!-- / Menu -->

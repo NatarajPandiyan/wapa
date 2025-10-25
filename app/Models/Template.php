@@ -9,4 +9,5 @@ class Template extends Model
 {
     use HasFactory;
     protected $fillable = ['template_name','header_type','header_text','header_image_url','body','footer'];
+    //  protected $fillable = ['customer_name','customer_mobile','customer_email'];
 }

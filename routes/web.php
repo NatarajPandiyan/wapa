@@ -18,8 +18,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::middleware('auth')->group(function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/customer-group', [App\Http\Controllers\Customer_GroupController::class, 'index'])->name('customer-group');
 Route::get('/new-template', [App\Http\Controllers\TemplateController::class, 'create'])->name('new-template');
 Route::post('/save-template', [App\Http\Controllers\TemplateController::class, 'store']);
+Route::get('/templates', [App\Http\Controllers\TemplateController::class, 'show']);
+Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'show']);
+Route::post('/customer-upload', [App\Http\Controllers\CustomerController::class, 'store']);
+
+});

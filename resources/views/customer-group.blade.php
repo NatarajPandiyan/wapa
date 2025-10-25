@@ -9,6 +9,7 @@
               
  <div class="col-xl-8">
                   <h6 class="text-muted">Customer Group</h6>
+                  <a href="/customer" class="btn btn-primary">ADD New</a>
                   <div class="nav-align-top mb-4">
                     <ul class="nav nav-tabs nav-fill" role="tablist">
                       <li class="nav-item">
