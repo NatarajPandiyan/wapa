@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\company;
 use Illuminate\Http\Request;
-use  App\Models\Customer_Group;
-class Customer_GroupController extends Controller
+
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,13 +14,9 @@ class Customer_GroupController extends Controller
      */
     public function index()
     {
-
-            $groups = Customer_group::withCount('customers')->get();
-            // dd($data);
-        return view('customer-group',compact('groups'));
+        //
     }
 
-   
     /**
      * Show the form for creating a new resource.
      *
@@ -27,7 +24,7 @@ class Customer_GroupController extends Controller
      */
     public function create()
     {
-        //
+        return view ('company');
     }
 
     /**
@@ -38,16 +35,16 @@ class Customer_GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(company $company)
     {
         //
     }
@@ -55,10 +52,10 @@ class Customer_GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(company $company)
     {
         //
     }
@@ -67,10 +64,10 @@ class Customer_GroupController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, company $company)
     {
         //
     }
@@ -78,10 +75,10 @@ class Customer_GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(company $company)
     {
         //
     }

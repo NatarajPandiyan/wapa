@@ -27,5 +27,9 @@ Route::post('/save-template', [App\Http\Controllers\TemplateController::class, '
 Route::get('/templates', [App\Http\Controllers\TemplateController::class, 'show']);
 Route::get('/customers', [App\Http\Controllers\CustomerController::class, 'show']);
 Route::post('/customer-upload', [App\Http\Controllers\CustomerController::class, 'store']);
-
+Route::get('/comapanies', [App\Http\Controllers\CompanyController::class, 'create']);
+Route::post('/store-company', [App\Http\Controllers\CompanyController::class, 'store']);
+Route::get('/new-campaign', [App\Http\Controllers\CampaignController::class, 'index']);
+Route::get('/store-campaign', [App\Http\Controllers\CampaignController::class, 'store']);
+Route::get('/get-template/{template_id}', [App\Http\Controllers\TemplateController::class, 'getTemplate']);
 });

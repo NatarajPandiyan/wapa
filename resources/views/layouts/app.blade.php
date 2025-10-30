@@ -51,6 +51,11 @@
     <link rel="stylesheet" href="{{ asset('/css/demo.css')}}" />
 
     <!-- Vendors CSS -->
+         <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet"/>
+
+
+
+    <link href="{{ asset('/css/select2.min.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
 
     <link rel="stylesheet" href="{{ asset('/libs/apex-charts/apex-charts.css')}}" />
@@ -64,6 +69,8 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('/js/config.js')}}"></script>
+
+    @stack('css')
   </head>
 
   <body>
@@ -148,35 +155,25 @@
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
-
-            <!-- Layouts -->
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Customer</div>
+            <li class="menu-item ">
+              <a href="/customer-group" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                <div data-i18n="Analytics">Customer</div>
               </a>
-
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="/customer-group" class="menu-link">
-                    <div data-i18n="Without menu">Customer Group</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="/customers" class="menu-link">
-                    <div data-i18n="Without navbar">Bulk Import</div>
-                  </a>
-                </li>
-              
-              </ul>
             </li>
+          
             <li class="menu-item">
               <a href="/templates" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bx-detail"></i>
                 <div data-i18n="Analytics">Template</div>
               </a>
             </li>
-            
+             <li class="menu-item">
+              <a href="/campaign" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+                <div data-i18n="Analytics">Campaign</div>
+              </a>
+            </li>
         </aside>
         <!-- / Menu -->
 
@@ -228,6 +225,8 @@
     <!-- Page JS -->
     <script src="{{ asset('/js/dashboards-analytics.js')}}"></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+    <script src="{{ asset('js/select2.full.min.js')}}"></script>
     <!-- Place this tag in your head or just before your close body tag. -->
       @stack('scripts')
       <script>

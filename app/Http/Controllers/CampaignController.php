@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Campaign;
+use App\Models\Customer_Group;
 use Illuminate\Http\Request;
-use  App\Models\Customer_Group;
-class Customer_GroupController extends Controller
+use App\Models\Template;
+
+class CampaignController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,13 +16,14 @@ class Customer_GroupController extends Controller
      */
     public function index()
     {
+        $customer_groups= Customer_Group::all();
 
-            $groups = Customer_group::withCount('customers')->get();
-            // dd($data);
-        return view('customer-group',compact('groups'));
+        $templates= Template::where(['status'=>'Approved'])->get();
+
+        
+        return view('campaign',compact('customer_groups','templates'));
     }
 
-   
     /**
      * Show the form for creating a new resource.
      *
@@ -44,10 +48,10 @@ class Customer_GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Campaign $campaign)
     {
         //
     }
@@ -55,10 +59,10 @@ class Customer_GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Campaign $campaign)
     {
         //
     }
@@ -67,10 +71,10 @@ class Customer_GroupController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Campaign $campaign)
     {
         //
     }
@@ -78,10 +82,10 @@ class Customer_GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Campaign $campaign)
     {
         //
     }

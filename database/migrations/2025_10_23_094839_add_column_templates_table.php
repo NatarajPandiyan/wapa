@@ -13,7 +13,9 @@ class AddColumnTemplatesTable extends Migration
      */
     public function up()
     {
-        //
+         Schema::table('templates', function (Blueprint $table) {
+            $table->string('status')->default('Pending');
+            });
     }
 
     /**
@@ -23,6 +25,8 @@ class AddColumnTemplatesTable extends Migration
      */
     public function down()
     {
-        //
+         Schema::table('templates', function (Blueprint $table) {
+            $table->dropColumn('status');
+            });
     }
 }

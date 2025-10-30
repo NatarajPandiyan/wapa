@@ -6,6 +6,7 @@ use App\Models\customer;
 use App\Imports\PustomersImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use DB;
 class CustomerController extends Controller
 {
     /**
@@ -38,21 +39,19 @@ class CustomerController extends Controller
     {
         
         // dd($request->all());
+
+        // dd($request->all());
+
+        $group_id= DB::table('customer_group')->insertGetId(['group_name'=>$request->input('group_name'),'active'=>1]);
+
           $file = $request->file('file');
-             
          $extension = $file->getClientOriginalExtension();
-
-// dd([
-//     'extension' => $file->getClientOriginalExtension(),
-//     'mime'      => $file->getMimeType(),
-//     'original'  => $file->getClientOriginalName(),
-// ]);
-
          $request->validate([
         'file' => 'required|file|mimetypes:text/plain,text/csv',
          ]);
 
-    $group_id=1;
+
+    // $group_id=1;
     // $excelType = $extension === 'csv' ? \Maatwebsite\Excel\Excel::CSV : \Maatwebsite\Excel\Excel::XLSX;
 
      Excel::import(new PustomersImport($group_id), $request->file('file'));

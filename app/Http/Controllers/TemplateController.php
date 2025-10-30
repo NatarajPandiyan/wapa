@@ -87,7 +87,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => 'POST',
     CURLOPT_HTTPHEADER => array(
     'Content-Type: application/json',
-    'Authorization: Bearer EAARUezjzsD0BP2bO9bGC2ZC21RSH3PTCf8ddkqqUrmroZBeGZBOPRazB9p8OqMjbZCTm5RIqgR1pGRmXIbfh5OWrwlr3ShZCoQpcEL1G3N1yFZAO3rnaNgYuL4bxTvqmzTHAaRSbnif0OIKwdlliTQ3LoZCXFDgXDgAwILoOZBzOVrEY9nTIqIQETaYDNUBmMf5dR13M2mIaghlTOuNCIHfEf9licedYrOIKxwF55EV2LMNwPwZDZD'
+    'Authorization: Bearer EAARUezjzsD0BPy7HdupphkPTLbzVvQsZCtyv0duljtj7QDaNsUZCdWnYpLuv8BqGOg4rcu3QSzln1Mp68XUhy2kafJ9UZAIXYMbZB5Vv60uNBZA6vZAUa2jx4ehNtmjeuWGaaCjJnVEpT3038wuZBM6NlzsL6XR8gcaa808CHZBYOv2aOZBgUwSSrx9RRBLFqJrgrZACLYdT8lXJfV0p2gtN37ftGSuFtnHz6ewvcJrGArogZDZD'
   ),
   CURLOPT_POSTFIELDS => $post_data,
 ));
@@ -123,7 +123,7 @@ else
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://graph.facebook.com/v22.0/1344918480606360/message_templates?access_token=EAARUezjzsD0BP2bO9bGC2ZC21RSH3PTCf8ddkqqUrmroZBeGZBOPRazB9p8OqMjbZCTm5RIqgR1pGRmXIbfh5OWrwlr3ShZCoQpcEL1G3N1yFZAO3rnaNgYuL4bxTvqmzTHAaRSbnif0OIKwdlliTQ3LoZCXFDgXDgAwILoOZBzOVrEY9nTIqIQETaYDNUBmMf5dR13M2mIaghlTOuNCIHfEf9licedYrOIKxwF55EV2LMNwPwZDZD',
+        CURLOPT_URL => 'https://graph.facebook.com/v22.0/1344918480606360/message_templates?access_token=EAARUezjzsD0BPy7HdupphkPTLbzVvQsZCtyv0duljtj7QDaNsUZCdWnYpLuv8BqGOg4rcu3QSzln1Mp68XUhy2kafJ9UZAIXYMbZB5Vv60uNBZA6vZAUa2jx4ehNtmjeuWGaaCjJnVEpT3038wuZBM6NlzsL6XR8gcaa808CHZBYOv2aOZBgUwSSrx9RRBLFqJrgrZACLYdT8lXJfV0p2gtN37ftGSuFtnHz6ewvcJrGArogZDZD',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -136,8 +136,16 @@ else
 $response = curl_exec($curl);
 // dd($response);
 $template_data = json_decode($response, true);  
-//    dd($template_data);
+    //dd($template_data);
+    if(array_key_exists('error',$template_data))
+{
+    $template_lists=[];
+}
+else
+{
 $template_lists=$template_data['data'];
+}
+
 
 curl_close($curl);
 //echo $response;
@@ -176,5 +184,10 @@ return view('template-list', compact('template_lists'));
     public function destroy(Template $template)
     {
         //
+    }
+
+    public function getTemplate($template_id)
+    {
+        dd($template_id);
     }
 }

@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class customer extends Model
 {
     use HasFactory;
+
      protected $fillable = ['name','mobile','email','group_id'];
+
+     public function customer_group()
+    {
+        return $this->belongsTo(Customer_Group::class);
+    }
 }
 
