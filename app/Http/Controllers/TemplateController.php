@@ -35,7 +35,7 @@ class TemplateController extends Controller
      */
     public function store(Request $request)
     {
-    //   dd($request->all());
+       //dd($request->all());
         $Template = Template::create([
             'template_name'=>$request->input('template_name'),
             'header_type'=> $request->input('header_type'),
@@ -45,15 +45,38 @@ class TemplateController extends Controller
             'footer'=>$request->input('footer')
         ]);
 
-        
+        if($request->input('header_type')=='text' && ($request->input('header_text')!=null))
+        {
+             $body_data[]=[
+                "type"=> "HEADER",
+                "format"=>"TEXT",
+                "text"=> $request->input('header_text')
+            ];
+        }
+       /* elseif(($request->input('header_type')=='text')
+        {
+            $body_data[]=[
+                "type"=> "HEADER",
+                "format"=>"IMAGE",
+                "text"=> $request->input('header_text'),
+                "example": {
+                "header_handle": [
+                    "4::aW..."
+                ]
+            }
+            ];
+        }*/
+
         $body_data[]=["type"=> "BODY",
             "text"=> $request->input('body')];
+
         if($request->input('footer')!='')
         {
         $body_data[]=["type"=> "FOOTER",
             "text"=> $request->input('footer')];
         }
 
+        /*
         $body_data[]=[
              "type"=>"BUTTONS",
              "buttons"=> [[ 
@@ -63,7 +86,7 @@ class TemplateController extends Controller
             ]],
         
         ];
-
+*/
 $data=[
     "name"=>$request->input('template_name'),
     "category"=>$request->input('category'),
@@ -77,7 +100,7 @@ $post_data = http_build_query($data);
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://graph.facebook.com/v22.0/1344918480606360/message_templates',
+  CURLOPT_URL => 'https://graph.facebook.com/v22.0/1193491932645452/message_templates',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -87,7 +110,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => 'POST',
     CURLOPT_HTTPHEADER => array(
     'Content-Type: application/json',
-    'Authorization: Bearer EAARUezjzsD0BPy7HdupphkPTLbzVvQsZCtyv0duljtj7QDaNsUZCdWnYpLuv8BqGOg4rcu3QSzln1Mp68XUhy2kafJ9UZAIXYMbZB5Vv60uNBZA6vZAUa2jx4ehNtmjeuWGaaCjJnVEpT3038wuZBM6NlzsL6XR8gcaa808CHZBYOv2aOZBgUwSSrx9RRBLFqJrgrZACLYdT8lXJfV0p2gtN37ftGSuFtnHz6ewvcJrGArogZDZD'
+    'Authorization: Bearer EAALUtTr0boABP5AZBhtmPUqfZBZB3NZCGgIECq1ywfDdnmj9GL1VhJrGU3ZAxmLWpqweXimSEbTrUIGvdVcuV2hL4EO169e9UB2zajU55ZA67S1ajelL4vwFVjWhHYcDEZBILkxLuUyl6AkAZAOsx06GmufWkKZAsGENVSdLh6LDZB2h9FXB1hGzyTVOvEQXwEPgZDZD'
   ),
   CURLOPT_POSTFIELDS => $post_data,
 ));
@@ -102,7 +125,8 @@ else
 {
     if($response_data['status'] =='PENDING')
     {
-        ECHO 'Success';
+        //$this->show();
+        //ECHO 'Success';
     }
     else
     {
@@ -123,7 +147,7 @@ else
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://graph.facebook.com/v22.0/1344918480606360/message_templates?access_token=EAARUezjzsD0BPy7HdupphkPTLbzVvQsZCtyv0duljtj7QDaNsUZCdWnYpLuv8BqGOg4rcu3QSzln1Mp68XUhy2kafJ9UZAIXYMbZB5Vv60uNBZA6vZAUa2jx4ehNtmjeuWGaaCjJnVEpT3038wuZBM6NlzsL6XR8gcaa808CHZBYOv2aOZBgUwSSrx9RRBLFqJrgrZACLYdT8lXJfV0p2gtN37ftGSuFtnHz6ewvcJrGArogZDZD',
+        CURLOPT_URL => 'https://graph.facebook.com/v22.0/1193491932645452/message_templates?access_token=EAALUtTr0boABP8zN15eLB9pZCDOxcfhKcjyKqbfuzj52Aa69BSy17ZCVDary5ZABYqw7ylnnrWZCFtk6OpNtAgPQ8997WyT3vrRbqNlD1OeJmtUL9hQd5q2PIly7vXPXfaNKqI4l9IDX8EKZCaPkYdcsxBB8VEqinqXkhuZATtEDZCGeL0BdKukkJR9dSeyWwZDZD',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -134,9 +158,9 @@ else
         ));
 
 $response = curl_exec($curl);
-// dd($response);
+  // dd($response);
 $template_data = json_decode($response, true);  
-    //dd($template_data);
+     //dd($template_data);
     if(array_key_exists('error',$template_data))
 {
     $template_lists=[];
@@ -188,6 +212,7 @@ return view('template-list', compact('template_lists'));
 
     public function getTemplate($template_id)
     {
-        dd($template_id);
+        $template=Template::find($template_id);
+        return  response()->json($template);
     }
 }

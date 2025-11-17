@@ -15,12 +15,13 @@ class CreateCampaignsTable extends Migration
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
+            $table->string('campaign_name');
             $table->integer('template_id');
             $table->integer('company_id');
             $table->string('customer_group_id');
-            $table->integer('sent');
-            $table->integer('delivered');
-            $table->integer('click');
+            $table->integer('sent')->default(0);
+            $table->integer('delivered')->default(0);;
+            $table->integer('click')->default(0);;
             $table->timestamps();
         });
     }

@@ -30,7 +30,7 @@
     <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
     <meta name="description" content="" />
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
@@ -169,7 +169,7 @@
               </a>
             </li>
              <li class="menu-item">
-              <a href="/campaign" class="menu-link">
+              <a href="/campaigns" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                 <div data-i18n="Analytics">Campaign</div>
               </a>
@@ -230,6 +230,11 @@
     <!-- Place this tag in your head or just before your close body tag. -->
       @stack('scripts')
       <script>
+         $.ajaxSetup({
+            headers:
+            { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
+
   $("textarea").on("input", function () {
     let message = $(this).val();
     $(".chat-bubble").text(message);

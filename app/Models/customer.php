@@ -13,7 +13,7 @@ class customer extends Model
 
      public function customer_group()
     {
-        return $this->belongsTo(Customer_Group::class);
+        return $this->belongsTo(Customer_Group::class,'id');
     }
 }
 

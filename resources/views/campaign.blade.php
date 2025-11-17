@@ -149,18 +149,13 @@
                           </div>
                           <div class="row g-3">
                             <div class="col-sm-4">
-                              <label class="form-label" for="username">Campaign name</label>
-                              <input
-                                type="text"
-                                id="username"
-                                class="form-control"
-                                placeholder=""
-                              />
+                              <label class="form-label" for="campaign_name" >Campaign name</label>
+                              <input type="text" id="campaign_name" class="form-control" placeholder="" />
                             </div>
                             <div class="col-sm-4">
                               <label class="form-label" for="username">Target audience</label>
                               <div class="select2_contain">
-                                <select class="form-select select2drop" multiple="multiple" id="">
+                                <select class="form-select select2drop"  id="target_audience" multiple="multiple" id="">
                                   <option value=""></option>
                                   @foreach($customer_groups as $customer_group)
                                         <option value="{{$customer_group->id}}">{{$customer_group->group_name}}</option>
@@ -214,16 +209,14 @@
                               <div class="card_imgbox_wrap">
                                 <div class="card mobile_img_bg h-100">
                                   <div class="card-body card_cus_bby">
-                                    <h5 class="card-title mb5">loyalty_bonus_festive_v2</h5>
+                                    <h5 class="card-title mb5" id="template_name"></h5>
                                     <div class="cus_innr_bdy">
-                                      <img class="common_img_wrap img-fluid d-flex mx-auto my-2" src="https://fss.gupshup.io/0/public/0/0/gupshup/917871200411/01841d74-fa3b-4878-a067-48b31b76858c/1757308913255_Bonus%20points.png" alt="Card image cap" />
-                                      <p class="card-text">Hi Full Name, 
-                                      ✨ Celebrate this festive season with Kirtilals! ✨
-                                      We’ve added 2000 points to your account.
-                                      Redeem till 31st October on purchases of ₹50,000 & above.
-                                      Shop in-store or online 👉 link
-                                      T&C Apply*</p>
-                                      <a href="javascript:void(0);" class="card-link btns-coomon">Visit Store</a>
+                                      <div id="template_image_div" >
+                                      <img class="common_img_wrap img-fluid d-flex mx-auto my-2" id="template_image"  src="" alt="Card image cap" />
+                                      </div>
+                                      <p class="card-text" id="template_body"></p>
+                                      <p class="card-text" id="template_footer"></p>
+                                      <a href="javascript:void(0);" class="card-link btns-coomon" id="template_cta">Visit Store</a>
                                     </div>
                                   </div>
                                 </div>
@@ -248,7 +241,7 @@
                           </div>
                           <div class="row g-3">
                             <div class="col-sm-7 offset-5">
-                              <button class="btn btn-success btn-submit">Save and Send Now</button>
+                              <button class="btn btn-success btn-submit" id="sendcampaign">Save and Send Now</button>
                             </div>
                             
                             <div class="col-12 d-flex justify-content-between mt-4">
@@ -295,29 +288,78 @@ $('#template_id').on('change',function(id){
     
 console.log($(this).val());
 
-   $.ajax({
-  url: '/get-template/'+$(this).val(), 
-  method: 'GET', 
-  dataType: 'json', 
-  success: function(response) {
-    
-    console.log('Success:', response);
-   
-  },
-  error: function(xhr, status, error) {
-   
-    console.error('Error:', error);
-  },
-  complete: function() {
- 
-    console.log('Request complete.');
-  }
-});
-});
+          $.ajax({
+          url: '/get-template/'+$(this).val(), 
+          method: 'GET', 
+          dataType: 'json', 
+          success: function(response) {
+            
+                  console.log('Success:', response);
+
+                  $('#template_name').html(response.template_name);
+                  $('#template_body').html(response.body);
+                  $('#template_footer').html(response.footer);
+                  if(response.header_image_url=='' || response.header_image_url==null)
+                  {
+                    console.log('yes');
+                    
+                    $("#template_image_div").css("display", "none");
+                  }
+                  else
+                  {
+                    $("#template_image_div").css("display", "block");
+                    $('#template_image').attr('src',response.header_image_url);
+                  }
+                  if(response.cta_type=='' || response.cta_type==null)
+                  {
+                      $('#template_cta').css("display","none");
+                  }
+
+          },
+          error: function(xhr, status, error) {
+          
+            console.error('Error:', error);
+          },
+          complete: function() {
+        
+            console.log('Request complete.');
+          }
+      });
+    });
+
+$('#sendcampaign').click(function(){
+
+  console.log($('#template_id :selected').val());
+
+  var template_id=$('#template_id :selected').val();
+  var target_audience=$('#target_audience :selected').val();
+  var campaign_name=$('#campaign_name').val();
+
+ $.ajax({
+          url: '/store-campaign/', 
+          method: 'post', 
+          data:{template_id:template_id,target_audience:target_audience,campaign_name:campaign_name},
+          success: function(response) {
+            
+                
+          },
+          error: function(xhr, status, error) {
+          
+            console.error('Error:', error);
+          },
+          complete: function() {
+        
+            console.log('Request complete.');
+          }
+      });
+
 
     });
 
 
+  });
+
+    
   </script>
    @endpush
 @endsection

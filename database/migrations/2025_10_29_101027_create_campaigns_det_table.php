@@ -19,9 +19,9 @@ class CreateCampaignsDetTable extends Migration
             $table->integer('customer_id');
             $table->string('mobile_no');
             $table->integer('template_id');
-            $table->integer('sent');
-            $table->integer('delivered');
-            $table->integer('click');
+            $table->integer('sent')->default(0);;
+            $table->integer('delivered')->default(0);;
+            $table->integer('click')->default(0);;
             $table->timestamps();
         });
     }

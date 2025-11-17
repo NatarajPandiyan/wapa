@@ -12,6 +12,6 @@ class Customer_Group extends Model
     protected $table = 'customer_group';
     public function customers()
     {
-        return $this->hasMany(customer::class,'id');
+        return $this->hasMany(customer::class,'group_id');
     }
 }
